@@ -7,6 +7,7 @@
 * Old meg a videóhoz tartozó gyakorlati feladatot, mely a [designpatterns-gyak.md](designpatterns-gyak.md) fájlban van. 
   Dolgozhatsz ugyanabba a projektbe, a gyakorlati feladatok egymástól függetlenek. A feladatokhoz megtalálhatóak
   tesztesetek az [exercises](exercises) könyvtárban, mindig az adott videóhoz tartozót másold be a projektedbe!
+* A [solutions](solutions) könyvtárban megtalálod a gyakorlati feladatok megoldásait is.
 
 Amennyiben nem marad időd az összes gyakorlati feladat elvégzésére, a következő sorrend javasolt a feldolgozásban:
 
