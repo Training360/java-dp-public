@@ -1,26 +1,26 @@
 package prototype;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.verify;
 
-@RunWith(MockitoJUnitRunner.class)
-public class MailServiceTest {
+@ExtendWith(MockitoExtension.class)
+class MailServiceTest {
 
     @Mock
-    private MailSender mailSender;
+    MailSender mailSender;
 
     @InjectMocks
-    private MailService mailService;
+    MailService mailService;
 
     @Test
-    public void testSend() {
+    void testSend() {
         ArgumentCaptor<Mail> argumentCaptor = ArgumentCaptor.forClass(Mail.class);
         mailService.send(new Address("test", "test@training360.com"));
         verify(mailSender).send(argumentCaptor.capture());
@@ -34,7 +34,7 @@ public class MailServiceTest {
     }
 
     @Test
-    public void testSendWithNewContent() {
+    void testSendWithNewContent() {
         ArgumentCaptor<Mail> argumentCaptor = ArgumentCaptor.forClass(Mail.class);
         mailService.send(new Address("test", "test@training360.com"),
                 "text/html", "<html><body>test</body></html>");

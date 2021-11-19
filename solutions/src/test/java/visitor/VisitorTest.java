@@ -1,14 +1,13 @@
 package visitor;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class VisitorTest {
+class VisitorTest {
 
     @Test
-    public void testUpperCaseVisitor() {
+    void testUpperCaseVisitor() {
         Document document = new Document();
         Title title = new Title("Header 1");
         document.addItem(title);
@@ -22,8 +21,8 @@ public class VisitorTest {
         UpperCaseItemVisitor upperCaseItemVisitor = new UpperCaseItemVisitor();
         document.visit(upperCaseItemVisitor);
 
-        assertThat(((Title) document.getChildren().get(0)).getText(), equalTo("HEADER 1"));
-        assertThat(((Paragraph) document.getChildren().get(3)).getText(), equalTo("DOLOR SIT AMET"));
+        assertEquals("HEADER 1", ((Title) document.getChildren().get(0)).getText());
+        assertEquals("DOLOR SIT AMET", ((Paragraph) document.getChildren().get(3)).getText());
 
     }
 }

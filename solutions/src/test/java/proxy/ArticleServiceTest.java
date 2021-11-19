@@ -1,36 +1,32 @@
 package proxy;
 
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class ArticleServiceTest {
-
-    @Rule
-    public ExpectedException expectedException = ExpectedException.none();
+class ArticleServiceTest {
 
     @Test
-    public void hasRole() {
+    void hasRole() {
         ArticleService articleService = ArticleServiceFactory
                 .getArticleServiceProxy(new DefaultArticleService(), new SecurityContext("John Doe", "admin"));
         articleService.saveArticle();
-
+        // No exception!
     }
 
     @Test
-    public void hasNoRole() {
-        expectedException.expect(SecurityException.class);
-        expectedException.expectMessage("No role");
+    void hasNoRole() {
         ArticleService articleService = ArticleServiceFactory
                 .getArticleServiceProxy(new DefaultArticleService(), new SecurityContext("John Doe", "anonymous"));
-        articleService.saveArticle();
 
+        SecurityException e = assertThrows(SecurityException.class,
+                articleService::saveArticle);
+        assertEquals("No role", e.getMessage());
     }
 
     @Test
-    public void acceptAnyRoleForRead() {
+    void acceptAnyRoleForRead() {
         ArticleService articleService = ArticleServiceFactory
                 .getArticleServiceProxy(new DefaultArticleService(), new SecurityContext("John Doe", "anonymous"));
         articleService.readArticle();

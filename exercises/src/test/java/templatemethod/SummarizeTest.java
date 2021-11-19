@@ -1,16 +1,15 @@
 package templatemethod;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
+import java.util.List;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class SummarizeTest {
+class SummarizeTest {
 
-    private Bill bill = new Bill(Arrays.asList(
+    Bill bill = new Bill(List.of(
             new BillItem("Abstract factory", BigDecimal.valueOf(10.02)),
             new BillItem("Adapter", BigDecimal.valueOf(10.05)),
             new BillItem("Bridge", BigDecimal.valueOf(10.08)),
@@ -26,13 +25,13 @@ public class SummarizeTest {
     ));
 
     @Test
-    public void testVat10HalfEventRound() {
-        assertThat(bill.sum(new Vat10HalfEvenRoundSummarize()), equalTo(BigDecimal.valueOf(11.32)));
+    void testVat10HalfEventRound() {
+        assertEquals(BigDecimal.valueOf(11.32), bill.sum(new Vat10HalfEvenRoundSummarize()));
     }
 
     @Test
-    public void testVat27MathRound() {
-        assertThat(bill.sum(new Vat27MathRoundSummarize()), equalTo(BigDecimal.valueOf(30.61)));
+    void testVat27MathRound() {
+        assertEquals(BigDecimal.valueOf(30.61), bill.sum(new Vat27MathRoundSummarize()));
     }
 
 }

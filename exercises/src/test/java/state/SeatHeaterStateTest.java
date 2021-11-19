@@ -1,13 +1,13 @@
 package state;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class SeatHeaterStateTest {
+class SeatHeaterStateTest {
 
     @Test
-    public void testOffNext() {
+    void testOffNext() {
         SeatHeaterState state = SeatHeaterState.OFF;
         state = state.next();
         assertEquals(SeatHeaterState.THREE, state);
@@ -15,7 +15,7 @@ public class SeatHeaterStateTest {
     }
 
     @Test
-    public void testThreeNext() {
+    void testThreeNext() {
         SeatHeaterState state = SeatHeaterState.THREE;
         state = state.next();
         assertEquals(SeatHeaterState.TWO, state);
@@ -23,7 +23,7 @@ public class SeatHeaterStateTest {
     }
 
     @Test
-    public void testTwoNext() {
+    void testTwoNext() {
         SeatHeaterState state = SeatHeaterState.TWO;
         state = state.next();
         assertEquals(SeatHeaterState.ONE, state);
@@ -31,7 +31,7 @@ public class SeatHeaterStateTest {
     }
 
     @Test
-    public void testOneNext() {
+    void testOneNext() {
         SeatHeaterState state = SeatHeaterState.ONE;
         state = state.next();
         assertEquals(SeatHeaterState.OFF, state);

@@ -1,24 +1,24 @@
 package mediator;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class InsertUpdateFormTest {
+class InsertUpdateFormTest {
 
-    private InsertUpdateForm insertUpdateForm = new InsertUpdateForm();
+    InsertUpdateForm insertUpdateForm = new InsertUpdateForm();
 
     @Test
-    public void testInsert() {
+    void testInsert() {
         assertEquals("", insertUpdateForm.getId().getValue());
-        assertEquals(false, insertUpdateForm.getId().isVisible());
+        assertFalse(insertUpdateForm.getId().isVisible());
         assertEquals("", insertUpdateForm.getAuthor().getValue());
         assertEquals("", insertUpdateForm.getTitle().getValue());
         assertEquals("Insert", insertUpdateForm.getSubmit().getValue());
     }
 
     @Test
-    public void testSubmitInsert() {
+    void testSubmitInsert() {
         insertUpdateForm.getAuthor().setValue("GoF");
         insertUpdateForm.getTitle().setValue("Design Patterns");
         Book book = insertUpdateForm.submit();
@@ -28,17 +28,17 @@ public class InsertUpdateFormTest {
     }
 
     @Test
-    public void testUpdate() {
+    void testUpdate() {
         insertUpdateForm.toUpdate(new Book(20L, "GoF", "Design Patterns"));
         assertEquals("20", insertUpdateForm.getId().getValue());
-        assertEquals(true, insertUpdateForm.getId().isVisible());
+        assertTrue(insertUpdateForm.getId().isVisible());
         assertEquals("GoF", insertUpdateForm.getAuthor().getValue());
         assertEquals("Design Patterns", insertUpdateForm.getTitle().getValue());
         assertEquals("Update", insertUpdateForm.getSubmit().getValue());
     }
 
     @Test
-    public void testUpdateSubmit() {
+    void testUpdateSubmit() {
         insertUpdateForm.toUpdate(new Book(20L, "GoF", "Design Patterns"));
         insertUpdateForm.getAuthor().setValue("Gang of Four");
         Book book = insertUpdateForm.submit();
@@ -47,12 +47,12 @@ public class InsertUpdateFormTest {
     }
 
     @Test
-    public void testReset() {
+    void testReset() {
         insertUpdateForm.toUpdate(new Book(20L, "GoF", "Design Patterns"));
         insertUpdateForm.toInsert();
 
         assertEquals("", insertUpdateForm.getId().getValue());
-        assertEquals(false, insertUpdateForm.getId().isVisible());
+        assertFalse(insertUpdateForm.getId().isVisible());
         assertEquals("", insertUpdateForm.getAuthor().getValue());
         assertEquals("", insertUpdateForm.getTitle().getValue());
         assertEquals("Insert", insertUpdateForm.getSubmit().getValue());

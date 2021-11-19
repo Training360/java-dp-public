@@ -1,16 +1,16 @@
 package prototype;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
+import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class MailTest {
+class MailTest {
 
     @Test
-    public void createMail() {
-        Mail mail = new Mail(Arrays.asList(new Address("test", "test@training360.com")),
+    void createMail() {
+        Mail mail = new Mail(List.of(new Address("test", "test@training360.com")),
                 new Address("info", "info@training360.com"),
                 "test subject",
                 new MailContent("text/plain", "test content"));
@@ -22,8 +22,8 @@ public class MailTest {
     }
 
     @Test
-    public void cloneMail() {
-        Mail template = new Mail(Arrays.asList(new Address("test", "test@training360.com")),
+    void cloneMail() {
+        Mail template = new Mail(List.of(new Address("test", "test@training360.com")),
                 new Address("info", "info@training360.com"),
                 "test subject",
                 new MailContent("text/plain", "test content"));
@@ -37,7 +37,7 @@ public class MailTest {
         assertEquals(1, template.getTo().size());
 
         newMail.getMailContent().setText("test content 2");
-        assertEquals(newMail.getMailContent().getText(), "test content 2");
-        assertEquals(template.getMailContent().getText(), "test content");
+        assertEquals("test content 2", newMail.getMailContent().getText());
+        assertEquals("test content", template.getMailContent().getText());
     }
 }

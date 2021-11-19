@@ -1,16 +1,15 @@
 package composite;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.io.StringWriter;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.junit.Assert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
-public class DocumentWriterTests {
+class DocumentWriterTests {
 
     @Test
-    public void write() {
+    void write() {
         Document document = new Document();
         document.getHeader().addEntry("header1", "value1");
         document.getHeader().addEntry("header2", "value2");
@@ -23,8 +22,10 @@ public class DocumentWriterTests {
 
         StringWriter sWriter = new StringWriter();
         new DocumentWriter().write(document, sWriter);
-        assertThat(sWriter.toString(), containsString("---\nheader1: value1"));
-        assertThat(sWriter.toString(), containsString("# Title 1\n"));
-        assertThat(sWriter.toString(), containsString("Lorem ipsum\n"));
+        String result = sWriter.toString();
+        assertThat(result)
+                .contains("---\nheader1: value1")
+                .contains("# Title 1\n")
+                .contains("Lorem ipsum\n");
     }
 }

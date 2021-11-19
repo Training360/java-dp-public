@@ -1,15 +1,16 @@
 package observer;
 
-import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.jupiter.api.Test;
 
-public class BillItemTest {
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-    private int diff;
+class BillItemTest {
+
+    int diff;
 
     @Test
-    public void testAccess() {
+    void testAccess() {
         BillItem billItem = new BillItem(10);
         billItem.onChange(e -> diff = e.getDiff());
         billItem.setPrice(20);

@@ -1,47 +1,42 @@
 package factorymethod;
 
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.Test;
 
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class ReadBookTest {
+class ReadBookTest {
 
-    private BookReaderFactoryProvider bookReaderFactoryProvider = new BookReaderFactoryProvider();
-
-    @Rule
-    public ExpectedException exception = ExpectedException.none();
+    BookReaderFactoryProvider bookReaderFactoryProvider = new BookReaderFactoryProvider();
 
     @Test
-    public void testReadCsv() {
+    void testReadCsv() {
         Book book = bookReaderFactoryProvider
                 .getBookReaderFactory("csv")
                 .create()
                 .readBook(new InputStreamReader(ReadBookTest.class.getResourceAsStream("book.csv"), StandardCharsets.UTF_8));
-        assertThat(book.getAuthors(), equalTo("Erich Gamma"));
-        assertThat(book.getTitle(), equalTo("Design Patterns"));
+        assertEquals("Erich Gamma", book.getAuthors());
+        assertEquals("Design Patterns", book.getTitle());
     }
 
     @Test
-    public void testReadXml() {
+    void testReadXml() {
         Book book = bookReaderFactoryProvider
                 .getBookReaderFactory("xml")
                 .create()
                 .readBook(new InputStreamReader(ReadBookTest.class.getResourceAsStream("book.xml"), StandardCharsets.UTF_8));
-        assertThat(book.getAuthors(), equalTo("Erich Gamma"));
-        assertThat(book.getTitle(), equalTo("Design Patterns"));
+        assertEquals("Erich Gamma", book.getAuthors());
+        assertEquals("Design Patterns", book.getTitle());
     }
 
     @Test
-    public void testReadUnknownFileType() {
-        exception.expect(IllegalArgumentException.class);
-        exception.expectMessage("Illegal format: json");
+    void testReadUnknownFileType() {
 
-        bookReaderFactoryProvider.getBookReaderFactory("json");
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class,
+                () -> bookReaderFactoryProvider.getBookReaderFactory("json"));
+        assertEquals("Illegal format: json", e.getMessage());
     }
 }

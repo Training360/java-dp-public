@@ -1,16 +1,15 @@
 package chainofresponsibility;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
+import java.util.List;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class EventHandlerTest {
+class EventHandlerTest {
 
     @Test
-    public void handleEvent() {
+    void handleEvent() {
         HandlerNode root = new HandlerNode();
         SimpleNode s1 = new SimpleNode();
         root.addChild(s1);
@@ -26,15 +25,15 @@ public class EventHandlerTest {
         s1.handleEvent("event0");
         s11.handleEvent("event1");
         s11.handleEvent("event2");
-        assertThat(s11.getEvents(), equalTo(Arrays.asList("event1", "event2")));
-        assertThat(root.getEvents(), equalTo(Arrays.asList("event0")));
+        assertEquals(List.of("event1", "event2"), s11.getEvents());
+        assertEquals(List.of("event0"), root.getEvents());
 
 
         s2.handleEvent("event3");
         s21.handleEvent("event4");
         s22.handleEvent("event5");
-        assertThat(s2.getEvents(), equalTo(Arrays.asList("event3", "event4", "event5")));
-        assertThat(root.getEvents(), equalTo(Arrays.asList("event0")));
+        assertEquals(List.of("event3", "event4", "event5"), s2.getEvents());
+        assertEquals(List.of("event0"), root.getEvents());
 
     }
 }

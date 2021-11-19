@@ -1,39 +1,37 @@
 package singleton;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import java.util.List;
 
-import java.util.Arrays;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
-
-@RunWith(SpringJUnit4ClassRunner.class)
+@ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = Configuration.class)
-public class EmployeeTest {
+class EmployeeTest {
 
     @Autowired
-    private AddEmployeeController addEmployeeController;
+    AddEmployeeController addEmployeeController;
 
     @Autowired
-    private ListEmployeeController listEmployeeController;
+    ListEmployeeController listEmployeeController;
 
     @Test
     @DirtiesContext
-    public void addAndListEmployee() {
+    void addAndListEmployee() {
         addEmployeeController.addEmployee("John Doe");
-        assertThat(listEmployeeController.listEmployees(), equalTo(Arrays.asList("John Doe")));
+        assertEquals(List.of("John Doe"), listEmployeeController.listEmployees());
     }
 
     @Test
     @DirtiesContext
-    public void addAndListMoreEmployee() {
+    void addAndListMoreEmployee() {
         addEmployeeController.addEmployee("John Doe");
         addEmployeeController.addEmployee("Jack Doe");
-        assertThat(listEmployeeController.listEmployees(), equalTo(Arrays.asList("John Doe", "Jack Doe")));
+        assertEquals(List.of("John Doe", "Jack Doe"), listEmployeeController.listEmployees());
     }
 }

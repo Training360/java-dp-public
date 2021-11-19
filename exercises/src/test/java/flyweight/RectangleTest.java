@@ -1,20 +1,19 @@
 package flyweight;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.sameInstance;
-import static org.junit.Assert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
-public class RectangleTest {
+class RectangleTest {
 
     @Test
-    public void create() {
+    void create() {
         Rectangle r1 = Rectangle.getInstance(100, 200);
-        assertThat(r1.getWidth(), equalTo(100));
-        assertThat(r1.getHeight(), equalTo(200));
+        assertEquals(100, r1.getWidth());
+        assertEquals(200, r1.getHeight());
 
         Rectangle r2 = Rectangle.getInstance(100, 200);
-        assertThat(r1, sameInstance(r2));
+        assertSame(r2, r1);
     }
 }

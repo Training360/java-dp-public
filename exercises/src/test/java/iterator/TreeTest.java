@@ -1,19 +1,18 @@
 package iterator;
 
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class TreeTest {
+
+class TreeTest {
 
     @Test
-    public void testIterator() {
+    void testIterator() {
         Tree<String> tree = new Tree<>();
         tree.createRoot("a");
         tree.addChild("a", "a1");
@@ -22,11 +21,10 @@ public class TreeTest {
         tree.addChild("a1", "a12");
 
         List<String> l = new ArrayList<>();
-        Iterator<String> i = tree.iterator();
-        while (i.hasNext()) {
-            l.add(i.next());
+        for (String s : tree) {
+            l.add(s);
         }
 
-        assertThat(l, equalTo(Arrays.asList("a", "a1", "a11", "a12", "a2")));
+        assertEquals(List.of("a", "a1", "a11", "a12", "a2"), l);
     }
 }

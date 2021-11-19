@@ -21,7 +21,7 @@ public class CitySelector {
         Expression exp = parser.parseExpression(expression);
 
         EvaluationContext context = new StandardEvaluationContext(cities);
-        return (List<String>) exp.getValue(context);
+        return exp.getValue(context, List.class);
 
     }
 }

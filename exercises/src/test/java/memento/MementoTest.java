@@ -1,20 +1,20 @@
 package memento;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class MementoTest {
+class MementoTest {
 
     Document document = new Document();
     DocumentHistory documentHistory = new DocumentHistory(document);
 
-    @Before
-    public void init() {
+    @BeforeEach
+    void init() {
         document.setAuthors(List.of("GoF"));
         document.setTitle("Design Patterns");
 
@@ -24,7 +24,7 @@ public class MementoTest {
 
 
     @Test
-    public void testSaveAndRestore() {
+    void testSaveAndRestore() {
         documentHistory.takeSnapshot();
 
         document.setAuthors(List.of("Gang of four"));

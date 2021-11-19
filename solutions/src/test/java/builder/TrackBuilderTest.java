@@ -1,16 +1,16 @@
 package builder;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 
-import static org.hamcrest.Matchers.equalTo;
-import static org.junit.Assert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class TrackBuilderTest {
+class TrackBuilderTest {
 
     @Test
-    public void testBuildTrack() {
+    void testBuildTrack() {
         Track track = new TrackBuilder()
                 .withName("Test Track")
                 .withTrackType(TrackType.HIKING)
@@ -18,34 +18,40 @@ public class TrackBuilderTest {
                 .withPoint(47.49802, 19.03992, 131, LocalDateTime.now())
                 .build();
 
-        assertThat(track.getName(), equalTo("Test Track"));
-        assertThat(track.getTrackType(), equalTo(TrackType.HIKING));
-        assertThat(track.getPoints().get(0).getLat(), equalTo(47.49801));
-        assertThat(track.getPoints().get(1).getElevation(), equalTo(131.0));
+        assertEquals("Test Track", track.getName());
+        assertEquals(TrackType.HIKING, track.getTrackType());
+        assertEquals(47.49801, track.getPoints().get(0).getLat());
+        assertEquals(131.0, track.getPoints().get(1).getElevation());
     }
 
-    @Test(expected = IllegalStateException.class)
-    public void testEmptyName() {
-        new TrackBuilder().build();
+    @Test
+    void testEmptyName() {
+        assertThrows(IllegalStateException.class,
+                () -> new TrackBuilder().build());
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testIllegalLatLower() {
-        new TrackBuilder().withPoint(-91, 0,0, LocalDateTime.now());
+    @Test
+    void testIllegalLatLower() {
+
+        assertThrows(IllegalArgumentException.class,
+                () -> new TrackBuilder().withName("Test Track").withPoint(-91, 0,0, LocalDateTime.now()));
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testIllegalLatHigher() {
-        new TrackBuilder().withPoint(91, 0,0, LocalDateTime.now());
+    @Test
+    void testIllegalLatHigher() {
+        assertThrows(IllegalArgumentException.class,
+                () ->  new TrackBuilder().withName("Test Track").withPoint(91, 0,0, LocalDateTime.now()));
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testIllegalLonLower() {
-        new TrackBuilder().withPoint(0, -181,0, LocalDateTime.now());
+    @Test
+    void testIllegalLonLower() {
+        assertThrows(IllegalArgumentException.class,
+                () -> new TrackBuilder().withName("Test Track").withPoint(0, -181,0, LocalDateTime.now()));
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testIllegalLonHigher() {
-        new TrackBuilder().withPoint(0, 181,0, LocalDateTime.now());
+    @Test
+    void testIllegalLonHigher() {
+        assertThrows(IllegalArgumentException.class,
+                () -> new TrackBuilder().withName("Test Track").withPoint(0, 181,0, LocalDateTime.now()));
     }
 }

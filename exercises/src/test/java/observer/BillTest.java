@@ -1,26 +1,27 @@
 package observer;
 
-import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.jupiter.api.Test;
 
-public class BillTest {
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+class BillTest {
 
     @Test
-    public void testEmpty() {
+    void testEmpty() {
         Bill bill = new Bill();
         assertEquals(0, bill.getSum());
     }
 
     @Test
-    public void testAdd() {
+    void testAdd() {
         Bill bill = new Bill();
         bill.addBillItem(new BillItem(10));
         assertEquals(10, bill.getSum());
     }
 
     @Test
-    public void testAddItems() {
+    void testAddItems() {
         Bill bill = new Bill();
         bill.addBillItem(new BillItem(10));
         bill.addBillItem(new BillItem(20));
@@ -28,7 +29,7 @@ public class BillTest {
     }
 
     @Test
-    public void testChangeItem() {
+    void testChangeItem() {
         Bill bill = new Bill();
         bill.addBillItem(new BillItem(10));
         bill.addBillItem(new BillItem(20));

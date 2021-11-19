@@ -1,17 +1,17 @@
 package command;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class LocationServiceTest {
+class LocationServiceTest {
 
-    private LocationService locationService = new LocationService();
+    LocationService locationService = new LocationService();
 
     @Test
-    public void testCreate() {
+    void testCreate() {
         String id = UUID.randomUUID().toString();
         locationService.receiveCommand(new CreateLocationCommand(id, "Location1", 10, 10));
         Location location = locationService.findById(id);
@@ -19,7 +19,7 @@ public class LocationServiceTest {
     }
 
     @Test
-    public void testChangeName() {
+    void testChangeName() {
         String id = UUID.randomUUID().toString();
         locationService.receiveCommand(new CreateLocationCommand(id, "Location1", 10, 10));
         locationService.receiveCommand(new ChangeNameCommand(id, "Location2"));
@@ -28,7 +28,7 @@ public class LocationServiceTest {
     }
 
     @Test
-    public void testMoveTo() {
+    void testMoveTo() {
         String id = UUID.randomUUID().toString();
         locationService.receiveCommand(new CreateLocationCommand(id, "Location1", 10, 10));
         locationService.receiveCommand(new MoveToCommand(id, 20, 20));
@@ -37,7 +37,7 @@ public class LocationServiceTest {
     }
 
     @Test
-    public void testMoveToTwice() {
+    void testMoveToTwice() {
         String id = UUID.randomUUID().toString();
         locationService.receiveCommand(new CreateLocationCommand(id, "Location1", 10, 10));
         locationService.receiveCommand(new MoveToCommand(id, 20, 20));
@@ -48,7 +48,7 @@ public class LocationServiceTest {
     }
 
     @Test
-    public void testMoveToRelative() {
+    void testMoveToRelative() {
         String id = UUID.randomUUID().toString();
         locationService.receiveCommand(new CreateLocationCommand(id, "Location1", 10, 10));
         locationService.receiveCommand(new MoveRelativeCommand(id, +20, -20));
@@ -58,7 +58,7 @@ public class LocationServiceTest {
     }
 
     @Test
-    public void testUndo() {
+    void testUndo() {
         String id = UUID.randomUUID().toString();
         locationService.receiveCommand(new CreateLocationCommand(id, "Location1", 10, 10));
         locationService.receiveCommand(new MoveToCommand(id, 20, 20));

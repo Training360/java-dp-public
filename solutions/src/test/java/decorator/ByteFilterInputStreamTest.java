@@ -1,24 +1,24 @@
 package decorator;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class ByteFilterInputStreamTest {
+
+class ByteFilterInputStreamTest {
 
     @Test
-    public void testFilter() throws IOException {
+    void testFilter() throws IOException {
         InputStream is = new ByteFilterInputStream(new ByteArrayInputStream("abacda".getBytes(StandardCharsets.UTF_8)),
                 i -> i != 'a');
         byte[] chars = new byte[10];
         int i = is.read(chars);
-        assertThat(i, equalTo(3));
-        assertThat(new String(chars, 0, 3), equalTo("bcd"));
+        assertEquals(3, i);
+        assertEquals("bcd", new String(chars, 0, 3));
     }
 }

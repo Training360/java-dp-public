@@ -1,26 +1,25 @@
 package facade;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import javax.sql.DataSource;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = Configuration.class)
-public class JdbcTemplateTest {
+class JdbcTemplateTest {
 
     @Autowired
-    private DataSource dataSource;
+    DataSource dataSource;
 
     @Test
-    public void testQuery() {
+    void testQuery() {
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         Location location = jdbcTemplate.queryForObject("select id, name, lat, lon from locations where name = 'Budapest'",
                 (rs, i) -> new Location(rs.getLong("id"),
@@ -28,8 +27,8 @@ public class JdbcTemplateTest {
                         rs.getDouble("lat"),
                         rs.getDouble("lon")));
 
-        assertThat(location.getName(), equalTo("Budapest"));
-        assertThat(location.getLat(), equalTo(47.4979));
+        assertEquals("Budapest", location.getName());
+        assertEquals(47.4979, location.getLat());
 
     }
 }

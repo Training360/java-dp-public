@@ -1,57 +1,52 @@
 package strategy;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class SocialNetworkTest {
+class SocialNetworkTest {
 
     @Test
-    public void createMember() {
-        Member member = new Member("John Doe", Arrays.asList("Java", "OOP"));
-        assertThat(member.getName(), equalTo("John Doe"));
-        assertThat(member.getSkills(), equalTo(Arrays.asList("Java", "OOP")));
+    void createMember() {
+        Member member = new Member("John Doe", List.of("Java", "OOP"));
+        assertEquals("John Doe", member.getName());
+        assertEquals(List.of("Java", "OOP"), member.getSkills());
     }
 
     @Test
-    public void testFindMembersBy() {
-        SocialNetwork socialNetwork = new SocialNetwork(Arrays.asList(
-           new Member("John Doe", Arrays.asList("Java", "OOP")),
-           new Member("Jane Doe", Arrays.asList(".NET", "OOP")),
-           new Member("James Doe", Arrays.asList("Python", "Java", "OOP")),
-           new Member("Janet Doe", Arrays.asList("JavaScript", "scripting"))
+    void testFindMembersBy() {
+        SocialNetwork socialNetwork = new SocialNetwork(List.of(
+           new Member("John Doe", List.of("Java", "OOP")),
+           new Member("Jane Doe", List.of(".NET", "OOP")),
+           new Member("James Doe", List.of("Python", "Java", "OOP")),
+           new Member("Janet Doe", List.of("JavaScript", "scripting"))
         ));
 
         List<Member> found = socialNetwork.findMembersBy(m -> m.getSkills().contains("Java"));
-        assertThat(found.size(), equalTo(2));
-        assertThat(found.get(0).getName(), equalTo("John Doe"));
-        assertThat(found.get(1).getName(), equalTo("James Doe"));
+        assertEquals(2, found.size());
+        assertEquals("John Doe", found.get(0).getName());
+        assertEquals("James Doe", found.get(1).getName());
     }
 
     @Test
-    public void testApplyToSelectedMembers() {
-        SocialNetwork socialNetwork = new SocialNetwork(Arrays.asList(
-                new Member("John Doe", Arrays.asList("Java", "OOP")),
-                new Member("Jane Doe", new ArrayList<>(Arrays.asList(".NET", "OOP"))),
-                new Member("James Doe", Arrays.asList("Python", "Java", "OOP")),
-                new Member("Janet Doe", new ArrayList<>(Arrays.asList("JavaScript", "scripting")))
+    void testApplyToSelectedMembers() {
+        SocialNetwork socialNetwork = new SocialNetwork(List.of(
+                new Member("John Doe", List.of("Java", "OOP")),
+                new Member("Jane Doe", new ArrayList<>(List.of(".NET", "OOP"))),
+                new Member("James Doe", List.of("Python", "Java", "OOP")),
+                new Member("Janet Doe", new ArrayList<>(List.of("JavaScript", "scripting")))
         ));
 
         socialNetwork.applyToSelectedMembers(m -> m.getName().startsWith("Jane"), m -> m.getSkills().add("Design Patterns"));
 
-        assertThat(socialNetwork.findMembersBy(m -> m.getName().equals("Jane Doe")).get(0).getSkills(),
-                equalTo(Arrays.asList(".NET", "OOP", "Design Patterns")));
+        assertEquals(List.of(".NET", "OOP", "Design Patterns"), socialNetwork.findMembersBy(m -> m.getName().equals("Jane Doe")).get(0).getSkills());
 
-        assertThat(socialNetwork.findMembersBy(m -> m.getName().equals("John Doe")).get(0).getSkills(),
-                equalTo(Arrays.asList("Java", "OOP")));
+        assertEquals(List.of("Java", "OOP"), socialNetwork.findMembersBy(m -> m.getName().equals("John Doe")).get(0).getSkills());
 
-        assertThat(socialNetwork.findMembersBy(m -> m.getName().equals("Janet Doe")).get(0).getSkills(),
-                equalTo(Arrays.asList("JavaScript", "scripting", "Design Patterns")));
+        assertEquals(List.of("JavaScript", "scripting", "Design Patterns"), socialNetwork.findMembersBy(m -> m.getName().equals("Janet Doe")).get(0).getSkills());
 
 
     }

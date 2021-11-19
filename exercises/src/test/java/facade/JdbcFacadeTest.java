@@ -1,38 +1,30 @@
 package facade;
 
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
 import java.util.Optional;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = Configuration.class)
-public class JdbcFacadeTest {
+class JdbcFacadeTest {
 
     @Autowired
-    private DataSource dataSource;
-
-    @Rule
-    public ExpectedException expectedException = ExpectedException.none();
+    DataSource dataSource;
 
     @Test
-    public void testQueryForObjectTooMany() {
-        expectedException.expect(IllegalStateException.class);
-        expectedException.expectMessage("Too many results");
+    void testQueryForObjectTooMany() {
         JdbcFacade facade = new JdbcFacade(dataSource);
 
-        facade.queryForObject("select id, name, lat, lon from locations",
+        assertThrows(IllegalStateException.class,
+                () -> facade.queryForObject("select id, name, lat, lon from locations",
                 rs -> {
                     try {
                         return new Location(rs.getLong("id"),
@@ -42,11 +34,11 @@ public class JdbcFacadeTest {
                     } catch (SQLException sqle) {
                         throw new IllegalStateException("Error selecting", sqle);
                     }
-                }).get();
+                }).get());
     }
 
     @Test
-    public void testQueryForObjectEmpty() {
+    void testQueryForObjectEmpty() {
         JdbcFacade facade = new JdbcFacade(dataSource);
 
         Optional<Location> result = facade.queryForObject("select id, name, lat, lon from locations where name = 'Foo'",
@@ -65,7 +57,7 @@ public class JdbcFacadeTest {
     }
 
     @Test
-    public void testQueryForObject() {
+    void testQueryForObject() {
         JdbcFacade facade = new JdbcFacade(dataSource);
 
         Location location = facade.queryForObject("select id, name, lat, lon from locations where name = 'Budapest'",
@@ -80,7 +72,7 @@ public class JdbcFacadeTest {
                     }
                 }).get();
 
-        assertThat(location.getName(), equalTo("Budapest"));
-        assertThat(location.getLat(), equalTo(47.4979));
+        assertEquals("Budapest", location.getName());
+        assertEquals(47.4979, location.getLat());
     }
 }

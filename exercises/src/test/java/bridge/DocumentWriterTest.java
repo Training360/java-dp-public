@@ -2,18 +2,17 @@ package bridge;
 
 import bridge.asciidoc.AsciiDocDocument;
 import bridge.docbook.DocBookDocument;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.io.StringWriter;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
-public class DocumentWriterTest {
+class DocumentWriterTest {
 
     @Test
-    public void testAsciiDoc() throws IOException {
+    void testAsciiDoc() throws IOException {
         StringWriter sWriter = new StringWriter();
         try (AsciiDocDocument doc = new AsciiDocDocument(sWriter)) {
             DocumentWriter docWriter = new DocumentWriter(doc);
@@ -23,13 +22,15 @@ public class DocumentWriterTest {
             docWriter.writeParagraph("dolor sit amet");
             docWriter.writeParagraph("consectetur adipiscing elit");
         }
+        String result = sWriter.toString();
 
-        assertThat(sWriter.toString(), containsString("= Header 1\n"));
-        assertThat(sWriter.toString(), containsString("consectetur adipiscing elit\n\n"));
+        assertThat(result)
+                .contains("= Header 1\n")
+                .contains("consectetur adipiscing elit\n\n");
     }
 
     @Test
-    public void testDocBook() throws IOException {
+    void testDocBook() throws IOException {
         StringWriter sWriter = new StringWriter();
         try (DocBookDocument doc = new DocBookDocument(sWriter)) {
             DocumentWriter docWriter = new DocumentWriter(doc);
@@ -39,10 +40,10 @@ public class DocumentWriterTest {
             docWriter.writeParagraph("dolor sit amet");
             docWriter.writeParagraph("consectetur adipiscing elit");
         }
-
-        assertThat(sWriter.toString(), containsString("<title>Header 1</title>"));
-        assertThat(sWriter.toString(), containsString("<para>consectetur adipiscing elit</para>"));
-        assertThat(sWriter.toString(), containsString("</article>"));
-
+        String result = sWriter.toString();
+        assertThat(result)
+                .contains("<title>Header 1</title>")
+                .contains("<para>consectetur adipiscing elit</para>")
+                .contains("</article>");
     }
 }
