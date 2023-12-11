@@ -1,8 +1,6 @@
 package facade;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
+import jakarta.xml.bind.*;
 import java.io.StringWriter;
 
 public class XmlWriter {
