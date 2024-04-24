@@ -251,12 +251,12 @@ Készíts egy `DocumentWriter` osztályt, mely egyetlen metódust tartalmaz. A `
 
 ## Decorator
 
-Készíts `ByteFilterInputStream` dekorátor osztályt az `InputStream`-hez, mely konstruktorában a becsomagolt `Inputstream`-en kívül egy `IntPredicate`
-típusú szűrőfeltételt is kap. Csak az `InputStream` `read()` metódusát úgy írd felül (ugyanis a többi metódus
-ezt a metódust hívja), hogy csak a feltételnek megfelelő bájtokat olvassa fel egyenként.
+Készíts `ByteFilterInputStream` dekorátor osztályt az `InputStream`-hez, mely konstruktorában a becsomagolt `InputStream`-en kívül egy `IntPredicate`
+típusú szűrőfeltételt is kap. Csak az `InputStream` paraméter nélküli `read()` metódusát úgy írd felül (ugyanis a többi metódus - pl. az `InputStream`-ben lévő `read(byte[] b)` metódus  -
+ezt a metódust hívja ciklusban), hogy csak a feltételnek megfelelő bájtokat olvassa fel egyenként.
 
-Úgy implementáld, hogy olvassa be a karaktereket, amíg az vagy megengedett karakter, vagy a végére nem ér. Azaz egy ciklusban kell olvasni be
-a bájtokat. Amennyiben nem felel meg a bájt a feltételnek, lépjen tovább.
+Úgy implementáld a `read()` metódust, hogy egyenként továbbhívva a becsomagolt `InputStream` paraméter nélküli `read()` metódusát olvassa be a karaktereket, amíg az vagy megengedett karakter, vagy a végére nem ér (ekkor -1 értéket ad vissza). Azaz egy ciklusban kell olvasni be
+a bájtokat. Amennyiben nem felel meg a bájt a feltételnek, ki lehet lépni a ciklusból, hiszen azt nem kell kiszűrni, azaz azzal kell visszatérni. 
 
 ## Facade
 
